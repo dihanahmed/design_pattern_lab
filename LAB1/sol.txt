@@ -1,0 +1,78 @@
+
+interface Message
+{
+    changeMessage(): string
+    }
+
+    class PlainMessage implements Message
+{
+
+userMessage:
+    string
+
+    constructor(userMessage: string)
+    {
+        this.userMessage = userMessage
+    }
+
+    public changeMessage(): string
+    {
+        return this.userMessage;
+    }
+}
+
+class MessageDecorator implements Message
+{
+protected txtObject:
+    Message;
+
+    constructor(txtObject: Message)
+    {
+        this.txtObject = txtObject;
+    }
+
+    public changeMessage(): string
+    {
+        return this.txtObject.changeMessage();
+    }
+}
+
+class BoldDecorator extends MessageDecorator
+{
+    public changeMessage(): string
+    {
+        return super.changeMessage().bold();
+    }
+}
+
+class ItalicDecorator extends MessageDecorator
+{
+    public changeMessage(): string
+    {
+        return super.changeMessage().italics();
+    }
+}
+
+class StrikeOutDecorator extends MessageDecorator
+{
+    public changeMessage(): string
+    {
+        return super.changeMessage().strike();
+    }
+}
+
+function showOutput(txtObject: Message)
+{
+    console.log(`$ {txtObject.changeMessage()}`);
+}
+
+
+const plain = new PlainMessage('Hello, World');
+const d1 = new BoldDecorator(plain);
+const d2 = new ItalicDecorator(d1);
+const d3 = new StrikeOutDecorator(d2);
+
+showOutput(plain);
+showOutput(d1);
+showOutput(d2);
+showOutput(d3);
